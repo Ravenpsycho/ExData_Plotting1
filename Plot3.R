@@ -36,9 +36,10 @@ lines(dat_sub$Sub_metering_3,
       type = "l", col = 4
 )
 ## adding legend
-legend(1500, lims[2] + (lims[2] /10), 
+legend("topright", 
        legend = names(dat_sub[,7:9]), lty = 1, col = c(1,2,4))
 ## adding axis legend
 axis(1, at = c(0, first_fri, dim(dat_sub)[[1]]), labels = c("Thu", "Fri", "Sat"))
 
 dev.off()
+
