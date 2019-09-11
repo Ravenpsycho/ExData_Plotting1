@@ -7,18 +7,15 @@ dat <- read.csv2("household_power_consumption.txt", stringsAsFactors = F)
 dat$Date <- as.Date(dat$Date, format = "%d/%m/%Y")
 dat_sub <- dat[dat$Date == as.Date("2007-02-01") | dat$Date == as.Date("2007-02-02"), ]
 dat_sub$Day <- weekdays(dat_sub$Date) 
+dat_sub$datetime <- as.POSIXct(paste0(dat_sub$Date, " ", dat_sub$Time), format = "%Y-%m-%d %H:%M:%S")
 rm(dat)
 
 ## Plot 2 code
 png("plot2.png",width = 480, height = 480)
-
-first_fri <- which(dat_sub$Day =="Friday")[1]
-all(dat_sub$Day[1:1440] == "Thursday") & all(dat_sub$Day[1441:2880] == "Friday")
-plot(dat_sub$Global_active_power, 
+plot(y = dat_sub$Global_active_power, 
+     x = dat_sub$datetime,
      type = "l", 
-     xaxt = "n", 
-     xlab = "Day",
+     xlab = "",
      ylab = "Global Active Power (kilowatts)")
-axis(1, at = c(0, first_fri, dim(dat_sub)[[1]]), labels = c("Thu", "Fri", "Sat"))
 
 dev.off()
